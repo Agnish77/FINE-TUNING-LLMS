@@ -23,19 +23,24 @@ To start using CoderCreate, ensure that you have a compatible environment set up
 
 ### Dependencies
 - Python 3.x
+  
 - Required Python packages can be installed using:
 
 pip install openai langchain dotenv
+
 Other dependencies include libraries for handling prompts, managing API interactions, and working with different programming languages.
-Usage Instructions
+## Usage Instructions
 Setup Environment Variables: Ensure you have the appropriate API keys and environment variables in a .env file:
 
 OPENAI_API_KEY=your_openai_api_key
+
 LANGCHAIN_API_KEY=your_langchain_api_key
+
 Initialize CoderCreate: You can initialize the assistant with a code snippet like the following:
 
-python
+
 from langchain_core.prompts import ChatPromptTemplate
+
 from openai import ChatCompletion
 
 prompt = ChatPromptTemplate.from_messages([
@@ -52,7 +57,6 @@ response = ChatCompletion.create(
 print(response['choices'][0]['text'])
 ## Querying the Assistant: You can ask coding-related questions in natural language, and CoderCreate will respond with detailed answers or examples. For instance:
 
-python
 
 user_input = "How do I create a REST API in Flask?"
 
@@ -60,14 +64,22 @@ user_input = "How do I create a REST API in Flask?"
 Here are some example interactions with CoderCreate:
 
 "What is the difference between a list and a tuple in Python?"
+
 "Can you explain recursion with an example in JavaScript?"
+
 "How do I implement a sorting algorithm using quicksort in C++?"
+
 "What are some best practices for securing a web application in Django?"
+
 ## Project Structure
-bash
-Copy code
+
 CoderCreate/
+
 ├── finetune.py                  # Script file for fine-tuning the assistant
+
 ├── .env                         # Environment file to store API keys
+
 ├── README.md                    # This markdown file
+
 └── requirements.txt             # List of dependencies
+
