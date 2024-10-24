@@ -1,85 +1,63 @@
 # FINETUNING
 
-# CoderCreate: Your Code Teaching Assistant
+This document provides a step-by-step guide to fine-tuning a large language model (LLM) using the Lamini framework. The example utilizes a custom dataset of questions and answers related to Lamini's functionalities.
 
 ## Overview
-CoderCreate is an AI-powered code teaching assistant, created by **Agnish Paul**, designed to assist with coding-related queries. This assistant leverages advanced AI models to provide answers to various coding questions, explain programming concepts, and offer guidance on best practices for software development.
 
-## Features
-- **Expert Code Assistance**: Answers a wide range of coding questions, including debugging, code optimization, and best practices.
-- **Programming Language Support**: Capable of assisting with multiple programming languages such as Python, JavaScript, Java, C++, etc.
-- **Educational Guidance**: Helps explain complex programming concepts in a simplified manner, suitable for both beginners and advanced learners.
-- **Code Generation**: Offers code examples and snippets tailored to specific needs.
-- **Parameter Customization**: Provides a parameter to adjust response behavior for personalized learning.
+The goal of this script is to:
+1. Define a dataset with various input-output pairs related to Lamini.
+2. Initialize the Lamini API and a specified model.
+3. Fine-tune the model using the defined dataset.
 
-## How CoderCreate Works
-CoderCreate utilizes the following parameters for a customizable experience:
-- **Temperature**: This parameter is set to `1`, ensuring a balance between creativity and accuracy in responses. A higher temperature leads to more creative and varied outputs, while a lower value provides more deterministic results.
-- **System Instruction**: The assistant operates with a predefined system instruction:
+## Prerequisites
+
+- Python installed on your system.
+- Lamini Python package installed. You can install it using pip:
+- pip install lamini
   
+## Code Explanation
+## Step 1: Define the Dataset
 
-## Getting Started
-To start using CoderCreate, ensure that you have a compatible environment set up with the required dependencies. You can integrate CoderCreate into your project using the following setup:
+The get_data function creates a dataset of questions and answers.
 
-### Dependencies
-- Python 3.x
-  
-- Required Python packages can be installed using:
+def get_data():
+    data = [
+        {
+            "input": "Are there any step-by-step tutorials or walkthroughs available in the documentation?",
+            "output": "Yes, there are step-by-step tutorials and walkthroughs available in the documentation section. Here’s an example for using Lamini to get insights into any python SDK: https://lamini-ai.github.io/example/",
+        },
+        {
+            "input": "Is the Lamini type system similar to a python type system?",
+            "output": "Yes, the Lamini type system is built using Pydantic BaseModel.",
+        },
+        # More entries...
+    ]
+    return data
+## Step 2: 
+Initialize Lamini API
 
-pip install openai langchain dotenv
+Set up the Lamini API key and initialize the LLM model.
 
-Other dependencies include libraries for handling prompts, managing API interactions, and working with different programming languages.
-## Usage Instructions
-Setup Environment Variables: Ensure you have the appropriate API keys and environment variables in a .env file:
+import lamini
+from lamini import Lamini
 
-OPENAI_API_KEY=your_openai_api_key
+lamini.api_key = "YOUR_API_KEY" 
 
-LANGCHAIN_API_KEY=your_langchain_api_key
+llm = Lamini(model_name="EleutherAI/pythia-410m")
 
-Initialize CoderCreate: You can initialize the assistant with a code snippet like the following:
+## Step 3: Prepare the Data
 
-
-from langchain_core.prompts import ChatPromptTemplate
-
-from openai import ChatCompletion
-
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a code teaching assistant named as codercreate created by Agnish Paul. Answer all code related questions."),
-    ("user", "Please explain how to implement a binary search in Python.")
-])
-
-# Code to invoke and retrieve response
-response = ChatCompletion.create(
-    model="codegemma",
-    prompt=prompt,
-    temperature=1
-)
-print(response['choices'][0]['text'])
-## Querying the Assistant: You can ask coding-related questions in natural language, and CoderCreate will respond with detailed answers or examples. For instance:
+Call the get_data function to retrieve the dataset.
 
 
-user_input = "How do I create a REST API in Flask?"
+data = get_data()
 
-## Example Queries
-Here are some example interactions with CoderCreate:
+## Step 4: Fine-Tune the Model
 
-"What is the difference between a list and a tuple in Python?"
+Use the tune method to fine-tune the LLM with the specified dataset.
 
-"Can you explain recursion with an example in JavaScript?"
+llm.tune(data_or_dataset_id=data, finetune_args={'learning_rate': 1.0e-4})
 
-"How do I implement a sorting algorithm using quicksort in C++?"
+## Conclusion
 
-"What are some best practices for securing a web application in Django?"
-
-## Project Structure
-
-CoderCreate/
-
-├── finetune.py                  # Script file for fine-tuning the assistant
-
-├── .env                         # Environment file to store API keys
-
-├── README.md                    # This markdown file
-
-└── requirements.txt             # List of dependencies
-
+This script demonstrates how to fine-tune a large language model using a custom dataset with the Lamini framework. By following the steps outlined above, you can adapt the model to respond more accurately to queries specific to your needs.
