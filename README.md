@@ -1,4 +1,4 @@
-# FINETUNING
+# FINETUNING LLMS
 
 This document provides a step-by-step guide to fine-tuning a large language model (LLM) using the Lamini framework. The example utilizes a custom dataset of questions and answers related to Lamini's functionalities.
 
